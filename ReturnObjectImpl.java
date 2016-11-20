@@ -4,20 +4,20 @@ public class ReturnObjectImpl implements ReturnObject {
     private Object object;
 
     public ReturnObjectImpl (ErrorMessage errorMessage) {
-        this.errorMessage = errorMessage;
+        errorMessage = errorMessage;
     }
 
     public ReturnObjectImpl (Object obj) {
-        this.object = obj;
-        this.errorMessage = ErrorMessage.NO_ERROR;
+        object = obj;
+        errorMessage = ErrorMessage.NO_ERROR;
     }
 
     public boolean hasError() {
-        return (this.errorMessage != ErrorMessage.NO_ERROR);
+        return (errorMessage != ErrorMessage.NO_ERROR);
     }
 
     public ErrorMessage getError() {
-        return hasError() ? this.errorMessage : ErrorMessage.NO_ERROR;
+        return hasError() ? errorMessage : ErrorMessage.NO_ERROR;
     }
 
 

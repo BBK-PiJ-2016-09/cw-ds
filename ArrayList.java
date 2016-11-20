@@ -6,34 +6,16 @@ public class ArrayList implements List {
         array = new Object[0];
     }
 
-    /**
-     * Returns true if the list is empty, false otherwise.
-     *
-     * @return true if the list is empty, false otherwise.
-     */
+
     public boolean isEmpty() {
         return (array.length == 0);
     }
 
-    /**
-     * Returns the number of items currently in the list.
-     *
-     * @return the number of items currently in the list
-     */
     public int size() {
         return array.length;
     }
 
-    /**
-     * Returns the element at the given position.
-     *
-     * If the index is negative or greater or equal than the size of
-     * the list, then an appropriate error must be returned.
-     *
-     * @param index the position in the list of the item to be retrieved
-     * @return the element or an appropriate error message,
-     *         encapsulated in a ReturnObject
-     */
+
     public ReturnObject get(int index) {
         ReturnObject returnIfErrors = checkErrors(index);
         if(returnIfErrors.hasError()) {
@@ -42,18 +24,6 @@ public class ArrayList implements List {
         return (new ReturnObjectImpl(array[index]));
     }
 
-    /**
-     * Returns the elements at the given position and removes it
-     * from the list. The indeces of elements after the removed
-     * element must be updated accordignly.
-     *
-     * If the index is negative or greater or equal than the size of
-     * the list, then an appropriate error must be returned.
-     *
-     * @param index the position in the list of the item to be retrieved
-     * @return the element or an appropriate error message,
-     *         encapsulated in a ReturnObject
-     */
     public ReturnObject remove(int index) {
         ReturnObject returnValue = get(index);
         if (!returnValue.hasError()) {
@@ -61,39 +31,15 @@ public class ArrayList implements List {
         }
         return returnValue;
     }
-    private void removeElementFromArrayByIndex(Object[] element, int index) {
-        Object[] newArray = new Object[size() -1];
-        int i = 0;
-        while (i < index) {
-            newArray[i] = array[i];
-            i++;
+
+    public ReturnObject add(Object item) {
+        ReturnObject itemToInsert = checkErrors(item);
+        if(!itemToInsert.hasError()) {
+            insertItemIntoArrayByIndex(item, size());
         }
-        i++;
-        while(i < size()) {
-            newArray[i - 1] = array[i];
-            i++;
-        }
-        array = newArray;
+        return itemToInsert;
     }
 
-    /**
-     * Adds an element to the list, inserting it at the given
-     * position. The indeces of elements at and after that position
-     * must be updated accordignly.
-     *
-     * If the index is negative or greater or equal than the size of
-     * the list, then an appropriate error must be returned.
-     *
-     * If a null object is provided to insert in the list, the
-     * request must be ignored and an appropriate error must be
-     * returned.
-     *
-     * @param index the position at which the item should be inserted in
-     *              the list
-     * @param item the value to insert into the list
-     * @return an ReturnObject, empty if the operation is successful
-     *         or containing an appropriate error message otherwise
-     */
     public ReturnObject add(int index, Object item) {
         ReturnObject itemToInsert = checkErrors(index, item);
         if(!itemToInsert.hasError()) {
@@ -138,9 +84,22 @@ public class ArrayList implements List {
             i++;
         }
         array = newArray;
-        System.out.println(size());
     }
 
+    private void removeElementFromArrayByIndex(Object[] element, int index) {
+        Object[] newArray = new Object[size() -1];
+        int i = 0;
+        while (i < index) {
+            newArray[i] = array[i];
+            i++;
+        }
+        i++;
+        while(i < size()) {
+            newArray[i - 1] = array[i];
+            i++;
+        }
+        array = newArray;
+    }
 
 
     /**
@@ -154,11 +113,5 @@ public class ArrayList implements List {
      * @return an ReturnObject, empty if the operation is successful
      *         or containing an appropriate error message otherwise
      */
-    public ReturnObject add(Object item) {
-        ReturnObject itemToInsert = checkErrors(item);
-        if(!itemToInsert.hasError()) {
-            insertItemIntoArrayByIndex(item, size());
-        }
-        return itemToInsert;
-    }
+
 }
